@@ -4,3 +4,25 @@ body {
   margin: auto;
   max-width: auto;
 }
+
+.code-block{
+  border-radius: 0px 0px 10px 10px
+}
+
+.code-block-no-info{
+  border-radius: 10px
+}
+
+code{
+  font-size: 1rem;
+}
+
+.code-info {
+  display: flex;
+  justify-content: space-between;
+  color: #e6e6ee;
+  background: rgb(72, 71, 71);
+  padding: 12px;
+  font-size: 12px;
+  border-radius: 10px 10px 0px 0px;
+}
