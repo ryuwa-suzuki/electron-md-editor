@@ -1,8 +1,4 @@
 import type { ForgeConfig } from '@electron-forge/shared-types';
-import { MakerSquirrel } from '@electron-forge/maker-squirrel';
-import { MakerZIP } from '@electron-forge/maker-zip';
-import { MakerDeb } from '@electron-forge/maker-deb';
-import { MakerRpm } from '@electron-forge/maker-rpm';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 
@@ -15,7 +11,45 @@ const config: ForgeConfig = {
     icon: 'images/robo'
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    {
+      name: "@electron-forge/maker-squirrel",
+      config: {
+        name: "electron_publish",
+      },
+    },
+    {
+      name: "@electron-forge/maker-zip",
+      platforms: ["darwin"],
+      config:{}
+    },
+    {
+      name: "@electron-forge/maker-deb",
+      config: {},
+    },
+    {
+      name: "@electron-forge/maker-rpm",
+      config: {},
+    },
+    {
+      name: '@electron-forge/maker-dmg',
+      config: {
+        format: 'ULFO'
+      }
+    }
+  ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      platforms: ["darwin"],
+      config: {
+        repository: {
+          owner: "ryuwa-suzuki",
+          name: "electron-md-editor",
+        },
+      },
+    }
+  ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
