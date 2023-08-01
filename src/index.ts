@@ -4,6 +4,12 @@ import { app, BrowserWindow, session } from 'electron';
 // whether you're running in development or production).
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+import { initIpcMain } from './background/index'
+declare global {
+  interface Window {
+    api: any
+  }
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -25,6 +31,7 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
+  initIpcMain()
 };
 
 // This method will be called when Electron has finished
