@@ -3,7 +3,7 @@ import path from 'path';
 const zennDirPath = '/Users/urchin/ryuwa/zenn-content';
 
 export function syncWithZenn (ipcMain: Electron.IpcMain) {
-  ipcMain.handle('sync-with-zenn', async () => {
+  ipcMain.handle('sync-with-zenn', async (e, {zennDirPath}) => {
     if (!fs.existsSync(zennDirPath)) throw new Error('no-content');
 
     let articles = {};
@@ -37,7 +37,7 @@ export function syncWithZenn (ipcMain: Electron.IpcMain) {
 }
 
 export function getZennFile (ipcMain: Electron.IpcMain) {
-  ipcMain.handle('get-zenn-file', async (e, {label, file}) => {
+  ipcMain.handle('get-zenn-file', async (e, {zennDirPath, label, file}) => {
     let fileDirPath = '';
     if (label === 'articles') {
       fileDirPath = path.join(zennDirPath, 'articles');
@@ -54,7 +54,7 @@ export function getZennFile (ipcMain: Electron.IpcMain) {
 }
 
 export function saveZennFile(ipcMain: Electron.IpcMain) {
-  ipcMain.handle('save-zenn-file', async (e, { label, file, content }) => {
+  ipcMain.handle('save-zenn-file', async (e, {zennDirPath, label, file, content }) => {
     let fileDirPath = '';
     if (label === 'articles') {
       fileDirPath = path.join(zennDirPath, 'articles');
