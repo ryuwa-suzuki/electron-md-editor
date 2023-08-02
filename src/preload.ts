@@ -3,8 +3,8 @@
 import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld(
   'api', {
-    syncWithZenn: () => ipcRenderer.invoke('sync-with-zenn'),
-    getZennFile: (label: string, file: string) => ipcRenderer.invoke('get-zenn-file', {label, file}),
-    saveZennFile: (label: string, file: string, content: string) => ipcRenderer.invoke('save-zenn-file', {label, file, content})
+    syncWithZenn: (zennDirPath: string) => ipcRenderer.invoke('sync-with-zenn', {zennDirPath}),
+    getZennFile: (zennDirPath: string, label: string, file: string) => ipcRenderer.invoke('get-zenn-file', {zennDirPath, label, file}),
+    saveZennFile: (zennDirPath: string, label: string, file: string, content: string) => ipcRenderer.invoke('save-zenn-file', {zennDirPath, label, file, content})
   }
 )
