@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-const zennDirPath = '/Users/urchin/ryuwa/zenn-content';
 
 export function syncWithZenn (ipcMain: Electron.IpcMain) {
   ipcMain.handle('sync-with-zenn', async (e, {zennDirPath}) => {
@@ -67,6 +66,26 @@ export function saveZennFile(ipcMain: Electron.IpcMain) {
       return;
     } catch (error) {
       throw new Error('Failed to save file');
+    }
+  });
+}
+
+export function uploadImage(ipcMain: Electron.IpcMain) {
+  ipcMain.handle('upload-image', async (e, {zennDirPath, imagePath }) => {
+    const distPath = path.join(zennDirPath, 'images');
+    const imageName = path.basename(imagePath);
+    const uploadImagePath = path.join(distPath, imageName)
+
+    try {
+      if (!fs.existsSync(distPath)) {
+        fs.mkdirSync(distPath);
+      }
+
+      fs.copyFileSync(imagePath, uploadImagePath)
+
+      return imageName;
+    } catch (error) {
+      throw new Error(error);
     }
   });
 }
