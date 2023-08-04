@@ -102,7 +102,7 @@ const MarkdownEditor = () => {
 
     const imageName = await window.api.uploadImage(zennDirPath, image.path);
 
-    const newContent = zennData.content + '![](/images/'+ imageName +')';
+    const newContent = localStorage.getItem('smde_saved_value') + '![](/images/'+ imageName +')';
 
     setZennData({...zennData, content: newContent});
     saveFile(newContent)
@@ -143,7 +143,6 @@ const MarkdownEditor = () => {
           alert('エラーが発生しました');
         }
       }, 2000);
-
     }
   }
 
