@@ -10,7 +10,8 @@ type zennContentType = {
     content: string;
     label: string;
     file: string;
-  }
+  },
+  isZennSynced: boolean;
   setZennData: (zennData: {content: string, label: string, file: string}) => void;
   fetchData: () => Promise<void>;
 };
@@ -23,7 +24,7 @@ export const useZennContentContext = () => {
 
 export const App = () => {
   const [files, setFiles] = useState({articles: [], books: []});
-  const [isSynced, setIsSynced] = useState(false);
+  const [isZennSynced, setIsZennSynced] = useState<zennContentType["isZennSynced"]>(false);
   const [zennData, setZennData] = useState<zennContentType["zennData"]>({
     content: "",
     label: "",
@@ -38,17 +39,17 @@ export const App = () => {
     const path = localStorage.getItem('zenn_dir_path');
     setZennDirPath(path);
     if (!path) {
-      setIsSynced(false);
+      setIsZennSynced(false);
       return;
     }
 
     try {
       const files = await window.api.syncWithZenn(path);
       setFiles(files);
-      setIsSynced(true);
+      setIsZennSynced(true);
     } catch (error) {
       alert('エラーが発生しました')
-      setIsSynced(false);
+      setIsZennSynced(false);
     }
   };
 
@@ -57,15 +58,15 @@ export const App = () => {
     fetchData();
   }, [zennDirPath]);
 
-  const editorWidth = isSynced ? {width: '75%'} : {width: '100%'}
+  const editorWidth = isZennSynced ? {width: '75%'} : {width: '100%'}
 
   return (
-    <ZennContentContext.Provider value={{zennData, setZennData, fetchData}}>
+    <ZennContentContext.Provider value={{zennData, isZennSynced, setZennData, fetchData}}>
       <Modal opened={opened} onClose={close}>
         <InitModal closeModal={close}/>
       </Modal>
       <div style={{display: 'flex'}}>
-        {isSynced &&
+        {isZennSynced &&
         <div style={{width: '25%'}}>
           <NavbarNested files={files}/>
         </div>

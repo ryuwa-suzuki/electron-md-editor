@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import SimpleMdeReact from "react-simplemde-editor";
 import SimpleMDE from "easymde";
 import { marked } from "marked";
@@ -60,8 +60,7 @@ const MarkdownEditor = () => {
     },
   ];
 
-  const { zennData, setZennData } = useZennContentContext();
-  const isZennSynced = zennData.label !== '' && zennData.file !== ''
+  const { zennData, isZennSynced, setZennData } = useZennContentContext();
   const value = localStorage.getItem('smde_saved_value') || "";
 
   marked.setOptions({breaks : true});
