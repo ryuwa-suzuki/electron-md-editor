@@ -23,6 +23,7 @@ const createWindow = (): void => {
     width: 1000,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      webSecurity: false
     },
   });
 
@@ -59,7 +60,7 @@ app.on('activate', () => {
 // セッションが準備できた後にCSPを設定
 app.whenReady().then(() => {
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    const cspHeader = "default-src 'self' 'unsafe-eval' 'unsafe-inline' data: https://maxcdn.bootstrapcdn.com https://cdn.jsdelivr.net/;";
+    const cspHeader = "default-src 'self' 'unsafe-eval' 'unsafe-inline' file: data: https://maxcdn.bootstrapcdn.com https://cdn.jsdelivr.net/;";
 
     callback({
       responseHeaders: {
