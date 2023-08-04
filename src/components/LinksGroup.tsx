@@ -73,9 +73,6 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksG
   const { classes, theme } = useStyles();
   const hasLinks = Array.isArray(links);
 
-  // const selectedFile = localStorage.getItem('selected_file');
-  // const selectedLabel = localStorage.getItem('selected_label');
-
   const { selected, setSelectedFile } = useSelectedFileContext();
 
   let isOpend = false;
