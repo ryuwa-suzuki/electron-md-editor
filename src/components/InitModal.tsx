@@ -28,7 +28,7 @@ const InitModal: React.FC<InitModalProps> = ({closeModal}) => {
         <Input
           placeholder="/Users/zenn"
           value={zennDirPath}
-          onChange={(event) => setZennDirPath(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setZennDirPath(event.target.value)}
         />
       </Input.Wrapper>
       <Space h="xl" />
