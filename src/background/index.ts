@@ -1,8 +1,8 @@
 import { ipcMain } from 'electron'
-import { getZennFile, saveZennFile, syncWithZenn, uploadImage } from './zenn'
+import { getZennContent, saveZennFile, syncWithZenn, uploadImage } from './zenn'
 export function initIpcMain () {
   syncWithZenn(ipcMain)
-  getZennFile(ipcMain)
+  getZennContent(ipcMain)
   saveZennFile(ipcMain)
   uploadImage(ipcMain)
 }
