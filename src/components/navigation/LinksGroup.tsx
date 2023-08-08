@@ -10,8 +10,7 @@ import {
   rem,
 } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import { useZennContentContext } from '../App';
-import { useSelectedFileContext } from './Navbar';
+import { useZennContentContext } from '../../contexts/ZennContext';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -62,52 +61,38 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface LinksGroupProps {
+type LinksGroupProps = {
   icon: React.FC<any>;
   label: string;
   initiallyOpened?: boolean;
   links?: { label: string;}[];
-}
+};
 
-export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksGroupProps) {
+const LinksGroup: React.FC<LinksGroupProps> = ({ icon: Icon, initiallyOpened, label, links }) => {
   const { classes, theme } = useStyles();
+  const { selectedFile, setSelectedFile } = useZennContentContext();
   const hasLinks = Array.isArray(links);
-
-  const { selected, setSelectedFile } = useSelectedFileContext();
 
   let isOpend = false;
   (hasLinks ? links : []).forEach((link) => {
-    if (link.label === selected.file && label === selected.label) {
+    if (link.label === selectedFile.file && label === selectedFile.label) {
       isOpend = true;
     }
   })
 
   const [opened, setOpened] = useState(isOpend || initiallyOpened);
-  const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft;
-  const { setZennData } = useZennContentContext();
-  const zennDirPath = localStorage.getItem('zenn_dir_path');
 
-  const selectFile = async (label: string, file: string) => {
-    try {
-      const content = await window.api.getZennFile(zennDirPath, label, file);
-      setZennData({
-        content,
-        label,
-        file
-      })
-      localStorage.setItem('smde_saved_value', content);
-    } catch {
-      alert('エラーが発生しました')
-    }
+  const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft;
+
+  const selectFile = (label: string, file: string) => {
+    setSelectedFile({label, file});
     localStorage.setItem('selected_file', file)
     localStorage.setItem('selected_label', label)
-    setSelectedFile({label, file});
   }
 
   const items = (hasLinks ? links : []).map((link) => (
-    <Text<'a'>
-      component="a"
-      className={`${classes.link} ${(link.label === selected.file && label === selected.label) ? classes.selectedLink : ''}`}
+    <Text
+      className={`${classes.link} ${(link.label === selectedFile.file && label === selectedFile.label) ? classes.selectedLink : ''}`}
       key={link.label}
       onClick={() => {
         selectFile(label, link.label)
@@ -143,3 +128,5 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }: LinksG
     </>
   );
 }
+
+export default LinksGroup;
