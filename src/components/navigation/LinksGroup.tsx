@@ -9,7 +9,7 @@ import {
   createStyles,
   rem,
 } from '@mantine/core';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { TablerIconsProps, IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 import { useZennContentContext } from '../../contexts/ZennContext';
 
 const useStyles = createStyles((theme) => ({
@@ -62,7 +62,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 type LinksGroupProps = {
-  icon: React.FC<any>;
+  icon: React.FC<TablerIconsProps>;
   label: string;
   initiallyOpened?: boolean;
   links?: { label: string;}[];

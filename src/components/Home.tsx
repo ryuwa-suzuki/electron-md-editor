@@ -4,10 +4,9 @@ import { useZennContentContext } from '../contexts/ZennContext';
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import InitModal from '../components/modal/InitModal';
-import { useEffect } from 'react';
 
 const Home = () => {
-  const { zennDirPath, isZennSynced, syncWithZenn, getZennContent, selectedFile } = useZennContentContext();
+  const { zennDirPath, isZennSynced } = useZennContentContext();
   const ModalOpen = !zennDirPath;
   const [opened, { close }] = useDisclosure(ModalOpen);
   const editorWidth = isZennSynced ? {width: '75%'} : {width: '100%'}
