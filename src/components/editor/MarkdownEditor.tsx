@@ -7,8 +7,8 @@ import "easymde/dist/easymde.min.css";
 import "highlight.js/styles/base16/bright.css";
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useZennContentContext } from '../App';
-import InitModal from '../components/InitModal';
+import { useZennContentContext } from '../../contexts/ZennContext';
+import InitModal from '../modal/InitModal';
 
 const MarkdownEditor = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -113,7 +113,6 @@ const MarkdownEditor = () => {
     return {
       breaks: true,
       width: 'auto',
-      autofocus: true,
       spellChecker: false,
       toolbar,
       uploadImage: true,
