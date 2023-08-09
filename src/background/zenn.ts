@@ -35,8 +35,8 @@ export function syncWithZenn (ipcMain: Electron.IpcMain) {
   })
 }
 
-export function getZennFile (ipcMain: Electron.IpcMain) {
-  ipcMain.handle('get-zenn-file', async (e, {zennDirPath, label, file}) => {
+export function getZennContent (ipcMain: Electron.IpcMain) {
+  ipcMain.handle('get-zenn-content', async (e, {zennDirPath, label, file}) => {
     let fileDirPath = '';
     if (label === 'articles') {
       fileDirPath = path.join(zennDirPath, 'articles');
